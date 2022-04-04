@@ -19,6 +19,8 @@ import { useState } from "react";
 import { EmptyStatePage } from "./components/EmptyStatePage";
 import { ProductsPage } from "./components/ProductsPage";
 
+var app;
+
 export default function App() {
   const [selection, setSelection] = useState([]);
   return (
@@ -34,7 +36,7 @@ export default function App() {
           {selection.length > 0 ? (
             <ProductsPage productIds={selection} />
           ) : (
-            <EmptyStatePage setSelection={setSelection} />
+            <EmptyStatePage setSelection={setSelection} app={app} />
           )}
         </MyProvider>
       </AppBridgeProvider>
@@ -44,7 +46,7 @@ export default function App() {
 
 
 function MyProvider({ children }) {
-  const app = useAppBridge();
+  app = useAppBridge();
 
   const client = new ApolloClient({
     cache: new InMemoryCache(),
