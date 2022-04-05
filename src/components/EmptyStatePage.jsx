@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 
-var ordersFulfulled = 85;
+var ordersFulfulled = 5;
 var donationTally = 0;
 var lastMonthDonations = 0;
 var yearToDateDonations = 0;
@@ -289,7 +289,8 @@ export function EmptyStatePage({ setSelection }) {
                         //do shit in here
                         yearToDateDonations += perOrderDonations * months[0].orders;
                         allTimeDonations += perOrderDonations * months[0].orders;
-                        donationTally += months[0].orders;
+                        //donationTally += months[0].orders;
+                        lastMonthDonations += perOrderDonations * months[0].orders;
                         setMonth1(prevState => ({
                           ...prevState,
                           isPaid: true
@@ -331,8 +332,8 @@ export function EmptyStatePage({ setSelection }) {
                         //do shit in here
                         yearToDateDonations += perOrderDonations * months[1].orders;
                         allTimeDonations += perOrderDonations * months[1].orders;
-                        donationTally += months[1].orders;
-                        lastMonthDonations += perOrderDonations * months[1].orders;
+                        //donationTally += months[1].orders;
+                        
                         setMonth2(prevState => ({
                           ...prevState,
                           isPaid: true
@@ -374,7 +375,7 @@ export function EmptyStatePage({ setSelection }) {
                         //do shit in here
                         yearToDateDonations += perOrderDonations * months[2].orders;
                         allTimeDonations += perOrderDonations * months[2].orders;
-                        donationTally += months[2].orders;
+                        //donationTally += months[2].orders;
                         setMonth3(prevState => ({
                           ...prevState,
                           isPaid: true
