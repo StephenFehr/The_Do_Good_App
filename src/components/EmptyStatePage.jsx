@@ -187,10 +187,13 @@ export function EmptyStatePage({ setSelection }) {
           <Card>
             <TextField
               type="number"
+              typeMax = {50}
+              typeMin = {0}
               label="Donation Value per Order"
-              value={perOrderDonations}
+              value={ perOrderDonations <= 0 ? 0 : perOrderDonations }
               onChange={handleDonationChange}
               autoComplete="off"
+  
             />
           </Card>
         </Modal.Section>
@@ -399,7 +402,8 @@ export function EmptyStatePage({ setSelection }) {
               <th>All Time Donations</th>
 
               <tr>
-                <td style={{ fontSize: 20 }}>${perOrderDonations}</td>
+              
+                <td style={{ fontSize: 20 }}>${perOrderDonations <= 0 ? 0 : perOrderDonations }</td>
                 <td style={{ fontSize: 20 }}>${yearToDateDonations}</td>
                 <td style={{ fontSize: 20 }}>${allTimeDonations}</td>
               </tr>
