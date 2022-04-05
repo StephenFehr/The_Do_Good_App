@@ -187,8 +187,8 @@ export function EmptyStatePage({ setSelection }) {
           <Card>
             <TextField
               type="number"
-              typeMax = {50}
-              typeMin = {0}
+              max = {50}
+              min = {0}
               label="Donation Value per Order"
               value={ perOrderDonations <= 0 ? 0 : perOrderDonations }
               onChange={handleDonationChange}
@@ -403,7 +403,7 @@ export function EmptyStatePage({ setSelection }) {
 
               <tr>
               
-                <td style={{ fontSize: 20 }}>${perOrderDonations <= 0 ? 0 : perOrderDonations }</td>
+                <td style={{ fontSize: 20 }}>${ perOrderDonations <= 0 ? 0 : perOrderDonations >= 50 ? 50 : perOrderDonations }</td>
                 <td style={{ fontSize: 20 }}>${yearToDateDonations}</td>
                 <td style={{ fontSize: 20 }}>${allTimeDonations}</td>
               </tr>
