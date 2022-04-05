@@ -35,14 +35,14 @@ var month3 = Object.create(pastMonth);
 // TODO set previous months based off todays date
 // TODO pull "isPaid" and "paidDate" information from database
 function setPastMonths() {
-  month2.month = "December";
-  month2.year = "2021";
-  month2.isPaid = true;
-  month2.paidDate = "January 13, 2022";
-  month3.month = "November";
-  month3.year = "2021";
-  month3.isPaid = true;
-  month3.paidDate = "December 6, 2022";
+  //month2.month = "December";
+  //month2.year = "2021";
+  //month2.isPaid = true;
+  //month2.paidDate = "January 13, 2022";
+  //month3.month = "November";
+  //month3.year = "2021";
+  //month3.isPaid = true;
+  //month3.paidDate = "December 6, 2022";
 };
 
 
@@ -60,26 +60,59 @@ export function EmptyStatePage({ setSelection }) {
     year: "2022",
     isPaid: false,
     paidDate: "April 5th 2022",
-  
+
     getMonth: function () {
       return this.month + " " + this.year;
     },
-  
+
     getPaidDate: function () {
       if (!this.isPaid) { return "You have not yet donated for " + this.month; }
       else { return "You marked as Paid on " + this.paidDate; }
     }
   });
-        const handleChange = e => {
-            const { isPaid, value } = e.target;
-            setMonth1(prevState => ({
-                ...prevState,
-                [isPaid]: value
-            }));
-        };
+
+  const [month2, setMonth2] = useState({
+    month: "December",
+    year: "2021",
+    isPaid: false,
+    paidDate: "April 5th 2022",
+
+    getMonth: function () {
+      return this.month + " " + this.year;
+    },
+
+    getPaidDate: function () {
+      if (!this.isPaid) { return "You have not yet donated for " + this.month; }
+      else { return "You marked as Paid on " + this.paidDate; }
+    }
+  });
+
+  const [month3, setMonth3] = useState({
+    month: "November",
+    year: "2021",
+    isPaid: false,
+    paidDate: "April 5th 2022",
+
+    getMonth: function () {
+      return this.month + " " + this.year;
+    },
+
+    getPaidDate: function () {
+      if (!this.isPaid) { return "You have not yet donated for " + this.month; }
+      else { return "You marked as Paid on " + this.paidDate; }
+    }
+  });
+
+  const handleChange = e => {
+    const { isPaid, value } = e.target;
+    setMonth1(prevState => ({
+      ...prevState,
+      [isPaid]: value
+    }));
+  };
 
   const handleDonationChange = useCallback((newValue) => setPerOrderDonations(newValue), [])
-  
+
   const handleSelection = (resources) => {
     setOpen(false);
     setSelection(resources.selection.map((product) => product.id));
@@ -100,7 +133,7 @@ export function EmptyStatePage({ setSelection }) {
       year: '2021',
       month: 'December',
       orders: 30,
-      status: 'Paid',
+      status: 'Not Paid',
     },
     {
       id: '1341',
@@ -108,7 +141,7 @@ export function EmptyStatePage({ setSelection }) {
       year: '2021',
       month: 'November',
       orders: 35,
-      status: 'Paid',
+      status: 'Not Paid',
     },
   ];
   const resourceName = {
@@ -153,7 +186,7 @@ export function EmptyStatePage({ setSelection }) {
         <Modal.Section>
           <Card>
             <TextField
-              type = "number"
+              type="number"
               label="Donation Value per Order"
               value={perOrderDonations}
               onChange={handleDonationChange}
@@ -230,73 +263,121 @@ export function EmptyStatePage({ setSelection }) {
             <Card.Section title={month1.getMonth()}>
               <p style={{ fontSize: 10, display: "inline" }}>{month1.getPaidDate()}</p>
               <div style={{ float: "right", marginTop: -18, paddingRight: 0, textDecoration: "none" }}>
-              {
-                month1.isPaid ?
-                
-                <Button
-                  disabled = {"true"}
-                  float={"right"}
-                  primary
-                  textAlign={"center"}
-                  onClick={() => {
-                    //setOpenViewMore(true)
-                  }}
-                >
-                  Paid
-                </Button>
-              
-                  :
-                  <Button
-  
-                  float={"right"}
-                  primary
-                  textAlign={"center"}
-                  onClick={() => {
+                {
+                  month1.isPaid ?
 
-                    //do shit in here
-                    yearToDateDonations += perOrderDonations * months[0].orders;
-                    setMonth1(prevState => ({
-                      ...prevState,
-                      isPaid: true
-                   }));
-                  }}
-                >
-                  Mark As Paid
-                </Button>
-              }
+                    <Button
+                      disabled={"true"}
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+                        //setOpenViewMore(true)
+                      }}
+                    >
+                      Paid
+                    </Button>
+
+                    :
+                    <Button
+
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+
+                        //do shit in here
+                        yearToDateDonations += perOrderDonations * months[0].orders;
+                        setMonth1(prevState => ({
+                          ...prevState,
+                          isPaid: true
+                        }));
+                      }}
+                    >
+                      Mark As Paid
+                    </Button>
+                }
               </div>
             </Card.Section>
 
             <Card.Section title={month2.getMonth()}>
               <p style={{ fontSize: 10, display: "inline" }}>{month2.getPaidDate()}</p>
-              {
-                month2.isPaid ?
-                  <button disabled style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, fontWeight: "bold", color: "#b0afb4",
-                    backgroundColor: "#f1f1f1", borderRadius: 5, border: "none"
-                  }}>Paid</button>
-                  :
-                  <button style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, color: "white", backgroundColor: "#028668",
-                    borderRadius: 5, border: "none"
-                  }}>Mark as Paid</button>
-              }
+              <div style={{ float: "right", marginTop: -18, paddingRight: 0, textDecoration: "none" }}>
+                {
+                  month2.isPaid ?
+
+                    <Button
+                      disabled={"true"}
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+                        //setOpenViewMore(true)
+                      }}
+                    >
+                      Paid
+                    </Button>
+
+                    :
+                    <Button
+
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+
+                        //do shit in here
+                        yearToDateDonations += perOrderDonations * months[1].orders;
+                        setMonth2(prevState => ({
+                          ...prevState,
+                          isPaid: true
+                        }));
+                      }}
+                    >
+                      Mark As Paid
+                    </Button>
+                }
+              </div>
             </Card.Section>
 
             <Card.Section title={month3.getMonth()}>
               <p style={{ fontSize: 10, display: "inline" }}>{month3.getPaidDate()}</p>
-              {
-                month3.isPaid ?
-                  <button disabled style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, fontWeight: "bold", color: "#b0afb4",
-                    backgroundColor: "#f1f1f1", borderRadius: 5, border: "none"
-                  }}>Paid</button>
-                  :
-                  <button style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, color: "white", backgroundColor: "#028668",
-                    borderRadius: 5, border: "none"
-                  }}>Mark as Paid</button>
-              }
+              <div style={{ float: "right", marginTop: -18, paddingRight: 0, textDecoration: "none" }}>
+                {
+                  month3.isPaid ?
+
+                    <Button
+                      disabled={"true"}
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+                        //setOpenViewMore(true)
+                      }}
+                    >
+                      Paid
+                    </Button>
+
+                    :
+                    <Button
+
+                      float={"right"}
+                      primary
+                      textAlign={"center"}
+                      onClick={() => {
+
+                        //do shit in here
+                        yearToDateDonations += perOrderDonations * months[2].orders;
+                        setMonth3(prevState => ({
+                          ...prevState,
+                          isPaid: true
+                        }));
+                      }}
+                    >
+                      Mark As Paid
+                    </Button>
+                }
+              </div>
             </Card.Section>
           </Card>
         </Layout.Section>
