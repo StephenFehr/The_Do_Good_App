@@ -56,7 +56,7 @@ export function EmptyStatePage({ setSelection }) {
   const [perOrderDonations, setPerOrderDonations] = useState("1.00");
 
   const [month1, setMonth1] = useState({
-    month: "January",
+    month: "March",
     year: "2022",
     isPaid: false,
     paidDate: "April 5th 2022",
@@ -72,8 +72,8 @@ export function EmptyStatePage({ setSelection }) {
   });
 
   const [month2, setMonth2] = useState({
-    month: "December",
-    year: "2021",
+    month: "February",
+    year: "2022",
     isPaid: false,
     paidDate: "April 5th 2022",
 
@@ -88,8 +88,8 @@ export function EmptyStatePage({ setSelection }) {
   });
 
   const [month3, setMonth3] = useState({
-    month: "November",
-    year: "2021",
+    month: "January",
+    year: "2022",
     isPaid: false,
     paidDate: "April 5th 2022",
 
@@ -123,23 +123,23 @@ export function EmptyStatePage({ setSelection }) {
       id: '3411',
       url: 'months/341',
       year: '2022',
-      month: 'January',
+      month: 'March',
       orders: 20,
       status: 'Not Paid',
     },
     {
       id: '2561',
       url: 'months/256',
-      year: '2021',
-      month: 'December',
+      year: '2022',
+      month: 'February',
       orders: 30,
       status: 'Not Paid',
     },
     {
       id: '1341',
       url: 'months/134',
-      year: '2021',
-      month: 'November',
+      year: '2022',
+      month: 'January',
       orders: 35,
       status: 'Not Paid',
     },
