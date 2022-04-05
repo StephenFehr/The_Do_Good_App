@@ -1,6 +1,6 @@
-import { React, useState } from "react";
-import { Heading, Page, Button, Card, Layout, Link, TextStyle, IndexTable, useIndexResourceState, Stack, Modal, TextContainer } from "@shopify/polaris";
-import { ResourcePicker, TitleBar } from "@shopify/app-bridge-react";
+import { React, useState, useCallback } from "react";
+import { Heading, Page, Button, Card, Layout, Link, TextStyle, IndexTable, useIndexResourceState, Stack, Modal, TextContainer, TextField } from "@shopify/polaris";
+import { ResourcePicker, TitleBar, SettingToggle } from "@shopify/app-bridge-react";
 import ReactDOM from "react-dom";
 
 const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
@@ -8,7 +8,6 @@ const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 var ordersFulfulled = 121;
 var donationTally = 242;
 var lastMonthDonations = 536;
-var perOrderDonations = 2;
 var yearToDateDonations = 1789;
 var allTimeDonations = 5324;
 
@@ -28,7 +27,7 @@ var pastMonth = {
   }
 };
 
-var month1 = Object.create(pastMonth);
+
 var month2 = Object.create(pastMonth);
 var month3 = Object.create(pastMonth);
 
@@ -36,9 +35,6 @@ var month3 = Object.create(pastMonth);
 // TODO set previous months based off todays date
 // TODO pull "isPaid" and "paidDate" information from database
 function setPastMonths() {
-  month1.month = "January";
-  month1.year = "2022";
-  month1.isPaid = false;
   month2.month = "December";
   month2.year = "2021";
   month2.isPaid = true;
@@ -56,6 +52,34 @@ setPastMonths();
 export function EmptyStatePage({ setSelection }) {
   const [open, setOpen] = useState(false);
   const [openViewMore, setOpenViewMore] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [perOrderDonations, setPerOrderDonations] = useState("1.00");
+
+  const [month1, setMonth1] = useState({
+    month: "January",
+    year: "2022",
+    isPaid: false,
+    paidDate: "April 5th 2022",
+  
+    getMonth: function () {
+      return this.month + " " + this.year;
+    },
+  
+    getPaidDate: function () {
+      if (!this.isPaid) { return "You have not yet donated for " + this.month; }
+      else { return "You marked as Paid on " + this.paidDate; }
+    }
+  });
+        const handleChange = e => {
+            const { isPaid, value } = e.target;
+            setMonth1(prevState => ({
+                ...prevState,
+                [isPaid]: value
+            }));
+        };
+
+  const handleDonationChange = useCallback((newValue) => setPerOrderDonations(newValue), [])
+  
   const handleSelection = (resources) => {
     setOpen(false);
     setSelection(resources.selection.map((product) => product.id));
@@ -91,12 +115,12 @@ export function EmptyStatePage({ setSelection }) {
     singular: 'month',
     plural: 'months',
   };
-  
-  const {selectedResources, allResourcesSelected, handleSelectionChange} =
-  useIndexResourceState(months);
-  
+
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(months);
+
   const rowMarkup = months.map(
-    ({id, year, month, orders, status}, index) => (
+    ({ id, year, month, orders, status }, index) => (
       <IndexTable.Row
         id={id}
         key={id}
@@ -117,17 +141,27 @@ export function EmptyStatePage({ setSelection }) {
     <Page>
       <TitleBar
         primaryAction={{
-          content: "Select A fridge",
-          onAction: () => setOpen(true),
+          content: "Settings",
+          onAction: () => setOpenSettings(true),
         }}
       />
-      <ResourcePicker // Resource picker component
-        resourceType="Product"
-        showVariants={false}
-        open={open}
-        onSelection={(resources) => handleSelection(resources)}
-        onCancel={() => setOpen(false)}
-      />
+      <Modal // Settings component
+        open={openSettings}
+        onClose={() => setOpenSettings(false)}
+        title="Settings"
+      >
+        <Modal.Section>
+          <Card>
+            <TextField
+              type = "number"
+              label="Donation Value per Order"
+              value={perOrderDonations}
+              onChange={handleDonationChange}
+              autoComplete="off"
+            />
+          </Card>
+        </Modal.Section>
+      </Modal>
       <Layout>
         <Layout.Section oneThird>
           <Card title="Month to Date">
@@ -152,9 +186,9 @@ export function EmptyStatePage({ setSelection }) {
 
         <Layout.Section oneThird>
           <Card title="Past Months">
-            <div style={{ float: "right", marginTop: -18, paddingRight: 5, textDecoration: "none" }}>
+            <div style={{ float: "right", marginTop: -18, paddingRight: 20, textDecoration: "none" }}>
               <Button
-                
+
                 float={"right"}
                 primary
                 textAlign={"center"}
@@ -166,7 +200,7 @@ export function EmptyStatePage({ setSelection }) {
               </Button>
             </div>
 
-            <Modal // Resource picker component
+            <Modal // View More component
               open={openViewMore}
               onClose={() => setOpenViewMore(false)}
               title="Past Months"
@@ -179,7 +213,7 @@ export function EmptyStatePage({ setSelection }) {
                     selectedItemsCount={
                       allResourcesSelected ? 'All' : selectedResources.length
                     }
-                    selectable = {false}
+                    selectable={false}
                     headings={[
                       { title: 'Year' },
                       { title: 'Month' },
@@ -195,19 +229,42 @@ export function EmptyStatePage({ setSelection }) {
 
             <Card.Section title={month1.getMonth()}>
               <p style={{ fontSize: 10, display: "inline" }}>{month1.getPaidDate()}</p>
+              <div style={{ float: "right", marginTop: -18, paddingRight: 0, textDecoration: "none" }}>
               {
                 month1.isPaid ?
-                  <button disabled style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, fontWeight: "bold", color: "#b0afb4",
-                    backgroundColor: "#f1f1f1", borderRadius: 5, border: "none"
-                  }}>Paid</button>
+                
+                <Button
+                  disabled = {"true"}
+                  float={"right"}
+                  primary
+                  textAlign={"center"}
+                  onClick={() => {
+                    //setOpenViewMore(true)
+                  }}
+                >
+                  Paid
+                </Button>
+              
                   :
-                  <button style={{
-                    display: "inline", padding: "4px 9px 4px 9px", float: "right", fontSize: 12, color: "white", backgroundColor: "#028668",
-                    borderRadius: 5, border: "none"
-                  }}>Mark as Paid</button>
-              }
+                  <Button
+  
+                  float={"right"}
+                  primary
+                  textAlign={"center"}
+                  onClick={() => {
 
+                    //do shit in here
+                    yearToDateDonations += perOrderDonations * months[0].orders;
+                    setMonth1(prevState => ({
+                      ...prevState,
+                      isPaid: true
+                   }));
+                  }}
+                >
+                  Mark As Paid
+                </Button>
+              }
+              </div>
             </Card.Section>
 
             <Card.Section title={month2.getMonth()}>
@@ -253,7 +310,7 @@ export function EmptyStatePage({ setSelection }) {
               <th>All Time Donations</th>
 
               <tr>
-                <td style={{ fontSize: 20 }}>${perOrderDonations}.00</td>
+                <td style={{ fontSize: 20 }}>${perOrderDonations}</td>
                 <td style={{ fontSize: 20 }}>${yearToDateDonations}</td>
                 <td style={{ fontSize: 20 }}>${allTimeDonations}</td>
               </tr>
