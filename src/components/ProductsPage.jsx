@@ -2,6 +2,9 @@ import { gql, useQuery } from "@apollo/client";
 import { Page, Layout, Banner, Card } from "@shopify/polaris";
 import { Loading } from "@shopify/app-bridge-react";
 import { ProductsList } from "./ProductsList";
+import { FirstofMonth,LastOfMonth } from "./GetMonthDate";
+import { GetOrders } from "./GetOrders"; 
+
 // GraphQL query to retrieve products by IDs.
 // The price field belongs to the variants object because
 // product variants can have different prices.
@@ -55,7 +58,10 @@ export function ProductsPage({ productIds }) {
           <Card>
             <ProductsList data={data} />
           </Card>
-          <ApplyRandomPrices selectedItems={data.nodes} onUpdate={refetch} />
+        <a>{ FirstofMonth(1) }</a>
+        <a>{ LastOfMonth(0) }</a>
+        
+        <GetOrders/>
         </Layout.Section>
       </Layout>
     </Page>
