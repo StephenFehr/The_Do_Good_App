@@ -39,8 +39,9 @@ const GET_PRODUCTS_BY_ID = gql`
 `;
 
 export function ProductsPage({ productIds }) {
-  const { loading, error, data, refetch } = useQuery(GET_PRODUCTS_BY_ID, {
-    variables: { ids: productIds },
+  const { loading, error, data} = useQuery(GET_PRODUCTS_BY_ID, {
+    variables: { ids: productIds, },
+
   });
   if (loading) return <Loading />;
 
@@ -58,10 +59,8 @@ export function ProductsPage({ productIds }) {
           <Card>
             <ProductsList data={data} />
           </Card>
-        <a>{ FirstofMonth(1) }</a>
-        <a>{ LastOfMonth(0) }</a>
-        
-        <GetOrders/>
+          <GetOrders first={FirstofMonth(0)} last={LastOfMonth(-1)}/>
+
         </Layout.Section>
       </Layout>
     </Page>
