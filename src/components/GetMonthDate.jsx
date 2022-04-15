@@ -1,4 +1,4 @@
-export function FirstofMonth(num){
+export function FirstOfMonth(num){
     //Function which returns the first of the previous month
     //Includes a parameter to decrement the number of months in the past
     //when num is 0 it is the current month when num is 1 it is last month

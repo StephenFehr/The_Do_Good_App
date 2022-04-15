@@ -1,10 +1,9 @@
+// UN-USED PAGE - CAN DELETE???
+
 import { gql, useQuery } from "@apollo/client";
 import { Page, Layout, Banner, Card } from "@shopify/polaris";
 import { Loading } from "@shopify/app-bridge-react";
 import { ProductsList } from "./ProductsList";
-import { FirstofMonth,LastOfMonth } from "./GetMonthDate";
-import { GetOrders } from "./GetOrders"; 
-
 // GraphQL query to retrieve products by IDs.
 // The price field belongs to the variants object because
 // product variants can have different prices.
@@ -39,9 +38,8 @@ const GET_PRODUCTS_BY_ID = gql`
 `;
 
 export function ProductsPage({ productIds }) {
-  const { loading, error, data} = useQuery(GET_PRODUCTS_BY_ID, {
-    variables: { ids: productIds, },
-
+  const { loading, error, data, refetch } = useQuery(GET_PRODUCTS_BY_ID, {
+    variables: { ids: productIds },
   });
   if (loading) return <Loading />;
 
@@ -59,8 +57,7 @@ export function ProductsPage({ productIds }) {
           <Card>
             <ProductsList data={data} />
           </Card>
-          <GetOrders first={FirstofMonth(0)} last={LastOfMonth(-1)}/>
-
+          <ApplyRandomPrices selectedItems={data.nodes} onUpdate={refetch} />
         </Layout.Section>
       </Layout>
     </Page>
