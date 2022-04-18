@@ -1,12 +1,25 @@
-# Shopify App Node
+# The Do-Good Club Shopify Application
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
+## Project Background
 
-This is a sample app to help developers bootstrap their Shopify app development.
+The world is in a state. With higher rates of homelessness, unemployment and some of the
+worst natural disasters in history popping out from every corner of the globe, organizations
+around the world are struggling to keep up.
 
-It leverages the [Shopify API Library](https://github.com/Shopify/shopify-node-api) on the backend to create [an embedded app](https://shopify.dev/apps/tools/app-bridge/getting-started#embed-your-app-in-the-shopify-admin), and [Polaris](https://github.com/Shopify/polaris-react) and [App Bridge React](https://shopify.dev/tools/app-bridge/react-components) on the frontend.
+The Do Good Club encourages small businesses and entrepreneurs to assign a dollar value to
+their invoices and then donate that amount at the end of the month. By motivating more people to give back in
+small ways, we can make a big difference!
 
-This is the repository used when you create a new Node app with the [Shopify CLI](https://shopify.dev/apps/tools/cli).
+## Key Objectives
+• Allow users to easily track their monthly donations
+
+• Remind users to make donations locally
+
+• Allow users to show their social impact to their customers
+
+• Increase donations to local organizations outside peak times
+
+• Allow Do Good Admins to see data about donations across all installs
 
 ## Requirements
 
@@ -30,14 +43,3 @@ SHOPIFY_API_SECRET={api secret key} # Your API secret key
 SCOPES={scopes}                     # Your app's required scopes, comma-separated
 HOST={your app's host}              # Your app's host, without the protocol prefix
 ```
-
-## Developer resources
-
-- [Introduction to Shopify apps](https://shopify.dev/apps/getting-started)
-  - [App authentication](https://shopify.dev/apps/auth)
-- [Shopify CLI command reference](https://shopify.dev/apps/tools/cli/app)
-- [Shopify API Library documentation](https://github.com/Shopify/shopify-node-api/tree/main/docs)
-
-## License
-
-This repository is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
