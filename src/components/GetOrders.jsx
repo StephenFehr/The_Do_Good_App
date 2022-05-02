@@ -22,7 +22,7 @@ query getOrders ($querySting: String!){
 //CALL LIKE THIS -> <GetOrders first={FirstofMonth(0)} last={LastOfMonth(-1)}/>
 
 
-
+//REACT based function
 export function GetOrdersReact(dateRange) {
 
   const { loading, error, data } = useQuery(GET_ORDER, {
@@ -50,6 +50,7 @@ export function GetOrdersReact(dateRange) {
   );
 }
 
+//JavaScript based Function
 export function GetOrders(first, last) {
 
   const { loading, error, data } = useQuery(GET_ORDER, {
